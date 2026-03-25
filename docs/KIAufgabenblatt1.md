@@ -10,55 +10,7 @@ Praktikum zum Modul Künstliche Intelligenz
 
 ---
 
-## Aufgabe P1 – Einarbeitung in die Programmiersprache python
-
-Um sich mit den Grundlagen der Programmierung in Python vertraut zu machen, empfehlen wir folgende Ressourcen:
-
-### Lernressourcen
-
-**Dive Into Python 3:**
-
-Eine umfassende Einführung in die Python-Sprache finden Sie unter  
-*diveintopython3.net*. Diese Webseite bietet detaillierte Beschreibungen und praktische Beispiele, um die Eigenheiten und die Syntax von Python zu verstehen.
-
-**Python Programmierung für Anfänger - Tutorial Video:**
-
-Auf YouTube steht Ihnen ein umfassendes Video zur Verfügung, das grundlegende und fortgeschrittene Konzepte der Python-Programmierung abdeckt. Sehen Sie sich das Video hier an.
-
-**Python Coding Conventions:**
-
-Für Konventionen zur Benennung von Variablen, Funktionen und mehr, besuchen Sie *VisualGit Naming Conventions*.
-
----
-
-Das Ziel des Praktikums ist das Verständnis der grundlegenden Programmierkonzepte. Die entwickelten Beispielprogramme sollten daher möglichst einfach gehalten werden, ohne auf die Anzahl der Codezeilen zu fokussieren.
-
-### Aufgabenstellungen
-
-#### Einfache Probleme:
-
-- Bearbeiten Sie einfache Problemstellungen, wie z.B. die Berechnung der ersten n Fibonacci-Zahlen.
-- Implementieren Sie eine objektorientierte Darstellung und Berechnung elementarer mathematischer Ausdrücke.
-
-### Aspekte in Python
-
-**Zahlen:**
-
-- Erforschen Sie die Handhabung von verschiedenen Zahlentypen, wie ganze Zahlen und reelle Zahlen.
-
-**Operatoren:**
-
-- Arbeiten Sie mit verschiedenen Operatoren, z.B. für Addition, Subtraktion, Multiplikation und Division.
-- Experimentieren Sie mit Klammerung und vereinfachten Rechnungen, indem Sie möglicherweise nur Addition und Subtraktion verwenden und die Operatorrangfolge ignorieren.
-
-**Klassen:**
-
-- Untersuchen Sie die Rolle und Struktur von Klassen in der objektorientierten Programmierung.
-
-**Vererbung vs. Duck Typing:**
-
-- Vergleichen Sie die Konzepte der Vererbung und des Duck Typing und ihre Anwendungen innerhalb von Python.
-
+TODO:: Testaufgabe für Gitlab Abtestat struktur.
 ---
 
 ## Aufgabe P2 – Dots And Boxes
