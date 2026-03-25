@@ -26,7 +26,7 @@ Dieses Dokument erklärt, wie ihr Aufgaben bearbeitet, Merge Requests erstellt u
 
 Nach dem ersten Klonen eures Team-Repos:
 ```bash
-git clone https://git.fh-muenster.de/ki-sandbox/<team-repo>.git
+git clone https://git.fh-muenster.de/labki-lehre-studierende/sose26/<team-repo>.git
 cd <team-repo>
 ```
 <!-- TODO: Links Anpassen!(muss sein damit die Studis pullen können)-->
