@@ -38,7 +38,7 @@ Ihr Python-Code soll insbesondere folgende Konzepte enthalten:
 
 > Hinweis:
 Diese Aufgabe hat **rein technischen Charakter** und dient nur dazu, den GitLab-Abtestat-Prozess (Commit, Push, Merge Request etc.) zu erproben.  
-Die Umsetzung der Python-Konzepte wird **nicht inhaltlich bewertet** und fließt **nicht** in die Note des Abtestats ein.
+Die Umsetzung der Python-Konzepte wird **nicht inhaltlich bewertet** und fließt **nicht** in die Bewertung des Abtestats ein.
 
 ------
 
