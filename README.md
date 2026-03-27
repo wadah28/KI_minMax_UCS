@@ -33,7 +33,7 @@ cd <team-repo>
 
 Fügen Sie einmalig das zentrale Repository als Upstream hinzu:
 ```bash
-git remote add upstream https://git.fh-muenster.de/labki-lehre-studierende/26sose/ki-praktikum
+git remote add upstream https://git.fh-muenster.de/labki-lehre-studierende/sose26/ki-praktikum
 git fetch upstream
 ```
 
