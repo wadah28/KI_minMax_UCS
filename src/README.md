@@ -18,23 +18,20 @@ Analysieren Sie den vorhandenen Quellcode. Kommentieren Sie die Funktionen und K
 
 ### Implementierung
 
-Fügen Sie die fehlende Spiellogik hinzu, um den vollständigen Spielverlauf gemäß des Aufgabenblattes ermöglichen. Dies beinhaltet das Abschließen von Boxen und deren Bewertung für einen potenziellen Gewinn des Spiels.
+Fügen Sie die fehlende Spiellogik hinzu, um den vollständigen Spielverlauf gemäß des Aufgabenblattes zu ermöglichen. Dies beinhaltet das Abschließen von Boxen und deren Bewertung für einen potenziellen Gewinn des Spiels.
 
 
 ## Einrichtung
 
-1. Klonen Sie das Repository mit:
-   ```bash
-   git clone https://git.fh-muenster.de/labki/ki_sose25.git
-   ```
-2. Abhängigkeiten installieren:
+1. Abhängigkeiten installieren:
    ```
    pip install termcolor
    ```
 
-3. Ausführen
+2. Ausführen
+
    ```
-   python3.12 controller.py
+   python controller.py
    ```
 
    

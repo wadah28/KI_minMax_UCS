@@ -8,105 +8,84 @@
 
 Willkommen zum KI-/Abtestat-Projekt!  
 Jedes Team arbeitet in einem eigenen GitLab-Repository.  
-Dieses Dokument erklärt, wie ihr Aufgaben bearbeitet, Merge Requests erstellt und Updates vom zentralen Repository übernehmt.
-
+ - Dieses Dokument erklärt, wie ihr Aufgaben bearbeitet, Merge Requests erstellt und Updates vom zentralen Repository übernehmt.
+ - Halten Sie sich an die vorgegebenen Strukturen und Konventionen.
 ---
 
 ## Grundprinzip
 
-- **`main` ist geschützt:**  
+- **`main (remote)` ist geschützt:**  
   Sie könnten dort nicht direkt pushen – nur Merge Requests.
 - **Ihr arbeitet in eigenen Branches:**  
-  z. B. `aufgabe_1`, `aufgabe_2`, `aufgabe_3`, …
+  z. B. `aufgabe_1`, `aufgabe_2_3`, `aufgabe_4`, …
 - **Neue Aufgaben oder Bugfixes** kommen aus dem *Parent-Repository* („upstream“).
 
 ---
 
 ## Einrichtung
 
-Nach dem ersten Klonen eures Team-Repos:
+Nach dem ersten Klonen Ihres Team-Repos:
 ```bash
 git clone https://git.fh-muenster.de/labki-lehre-studierende/sose26/<team-repo>.git
 cd <team-repo>
 ```
 <!-- TODO: Links Anpassen!(muss sein damit die Studis pullen können)-->
 
-Fügt dann einmalig das zentrale Repository als Upstream hinzu:
+Fügen Sie einmalig das zentrale Repository als Upstream hinzu:
 ```bash
-git remote add upstream https://git.fh-muenster.de/labki-lehre-studierende/sose26/ki-praktikum
+git remote add upstream https://git.fh-muenster.de/labki-lehre-studierende/26sose/ki-praktikum
 git fetch upstream
 ```
 
 ---
 
-## Workflow pro Aufgabe 
+## Workflow pro Aufgabe oder Aufgaben 
 <!-- (TODO: Branch pro Aufgabe oder pro Arbeitsblatt?)-->
 
 ###  Neuen Branch anlegen
 ```bash
-git checkout -b aufgabe_1
+git checkout -b aufgabe_x
 ```
 
 ###  Änderungen umsetzen
 Bearbeitet die entsprechenden Dateien, fügt neue Skripte oder Ergebnisse hinzu.
 
-### Committen
+### Commit erstellen 
 ```bash
 git add .
-git commit -m "Lösung Aufgabe 1"
-git push origin aufgabe_1
+git commit -m "Lösung Aufgabe X"
+git push origin aufgabe_x
 ```
 
 ### Merge Request erstellen
-Erstellt in GitLab einen **Merge Request** von `aufgabe_1` → `main`.
+> Achtung:
+> Der Merge Request muss im Remote Repository erfolgen.
 
-Dieser Merge Request entspricht eurem **Abtestat**.
+Erstellen Sie in GitLab einen **Merge Request** von `aufgabe_x` → `main`.
+Dieser Merge Request ist die Vorraussetzung für ein Abtestat.
 
 ---
 
-##  Updates vom Parent-Repo holen
-Wenn im zentralen Repo etwas geändert oder ergänzt wurde (z. B. neue Aufgaben, Bugfixes), könnt ihr diese Änderungen übernehmen:
+## Updates vom Parent Repository synchronisieren
+
+Wenn im zentralen Repository ("upstream") etwas geändert oder ergänzt wurde (z. B. neue Aufgaben, Bugfixes), können Sie diese Änderungen übernehmen:
 
 ```bash
 git fetch upstream
 git merge upstream/main
 ```
 
-Wenn es Konflikte gibt, löst Sie bitte lokal und pusht danach wieder auf euren Branch.
+Wenn es Konflikte gibt, lösten Sie diese bitte lokal und pushen danach wieder auf ihren Branch.
 
 ---
 
 ## Tipps
 
-- Nutzt sprechende Commit-Messages  
-- Arbeitet als Team auf demselben Branch pro Aufgabe  
+- Nutzen Sie sprechende Commit-Messages  
+- Arbeiten Sie als Team auf demselben Branch pro Aufgabe  
 - Der Merge Request wird zur Bewertung genutzt  
-- Ihr könnt mehrere Commits pushen, bevor ihr merged  
+- Ein Merge Request besteht üblicherweise aus mehren Commits. 
 
----
-
-##  Beispielübersicht
-
-| Aufgabe | Branch-Name | Merge-Request-Ziel |
-|----------|--------------|--------------------|
-| Aufgabenblatt 1 | `aufgabe_1` | `main` |
-oder aufgabe??
-| Aufgabenblatt 2 | `aufgabe_2` | `main` |
-| Aufgabenblatt 3 | `aufgabe_3` | `main` |
-
----
-
-##  Hilfe
-Falls ihr das Upstream-Repo falsch gesetzt habt:
-```bash
-git remote remove upstream
-git remote add upstream https://git.fh-muenster.de/ki-sandbox/<parent-repo>.git
-```
-
-Oder prüft eure Remotes:
-```bash
-git remote -v
-```
 
 ---
 
