@@ -20,7 +20,7 @@ Praktikum zum Modul Künstliche Intelligenz
 
 ## Aufgabe P5 – Problembeschreibung
 
-Modellieren Sie das Spiel **„Dots and Boxes“** als ein Problem der Künstlichen Intelligenz und entwerfen Sie einen Agenten, der die Züge sowohl für den Spieler in **Grün** als auch in **Rot** ausführt.
+Modellieren Sie das Spiel **„Dots and Boxes“** als ein Problembeschreibung (vgl. Vorlesung) und entwerfen Sie einen Agenten, der die Züge sowohl für den Spieler in **Grün** als auch in **Rot** ausführt.
 
 Beachten Sie dabei folgende Vorgaben:
 
@@ -33,7 +33,7 @@ Beachten Sie dabei folgende Vorgaben:
 ### Dokumentation
 
 *Dokumentieren Sie Ihre Lösung, insbesondere die oben geforderten Beschreibungen und Beispiele.*  
-Laden Sie Ihre Dokumentation vorab im ILIAS mithilfe der Funktion **„Datei abgeben“** des Termins 2 hoch.  
+Laden Sie Ihre Dokumentation vorab in Ihrem Git-Repository unter docs/ hoch.   
 Die Dokumentation kann auch gerne leserlich handschriftlich erstellt werden.
 
 ---
@@ -47,7 +47,7 @@ Wählen Sie eine geeignete Struktur des Suchraums für das Problem aus der voran
 
 ### Dokumentation
 
-*Dokumentieren Sie diese Überlegungen ebenfalls und laden Sie Ihre Notizen vorab im ILIAS hoch.*
+*Dokumentieren Sie diese Überlegungen ebenfalls und laden Sie Ihre Notizen vorab ins Git-Repository hoch.*
 
 ---
 
