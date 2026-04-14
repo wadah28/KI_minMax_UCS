@@ -32,9 +32,8 @@ Beachten Sie dabei folgende Vorgaben:
 
 ### Dokumentation
 
-*Dokumentieren Sie Ihre Lösung, insbesondere die oben geforderten Beschreibungen und Beispiele.*  
-Laden Sie Ihre Dokumentation vorab in Ihrem Git-Repository unter docs/ hoch.   
-Die Dokumentation kann auch gerne leserlich handschriftlich erstellt werden.
+Erstellen Sie hierzu eine Dokumentation, die sich an der in der Vorlesung beschriebenen Problembeschreibung orientiert.
+Laden Sie Ihre Dokumentation vorab in Ihrem Git-Repository unter `docs/` hoch.   
 
 ---
 
@@ -119,4 +118,4 @@ Welche Schritte sind notwendig, um den Minimax-Algorithmus auf das Spiel **„Vi
 
 ---
 
-[^1]: Mathematisch gesehen ist ein Baum ein spezieller Graph. Um hier die Sprechweise vereinfachen zu können, verwenden wir für „Baum“ und „Graph“ die Definitionen des Moduls *Diskrete Strukturen*, wobei wir bei Graphen explizit die Betrachtung von Graphen einschließen, die **keine** Bäume sind.eller Graph. Um hier die Sprechweise vereinfachen zu können, verwenden wir für „Baum“ und „Graph“ die Definitionen des Moduls „Diskrete Strukturen“, wobei wir bei Graphen explizit die Betrachtung von Graphen einschließen, die *keine* Bäume sind.
+[^1]: Mathematisch gesehen ist ein Baum ein spezieller Graph. Um hier die Sprechweise vereinfachen zu können, verwenden wir für „Baum“ und „Graph“ die Definitionen des Moduls *Diskrete Strukturen*, wobei wir bei Graphen explizit die Betrachtung von Graphen einschließen, die **keine** Bäume. 
