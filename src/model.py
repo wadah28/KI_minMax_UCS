@@ -90,6 +90,13 @@ class Graph:
                     edge_list.append(edge)
         return edge_list
 
+    def get_edge(self, a: Point, b: Point):
+        target = Edge(a, b)
+        for edge in self.get_edges():
+            if edge == target:
+                return edge
+        return None
+
     def __repr__(self) -> str:
         out = "Graph adjacency list:\n"
         for node, edges in self.adjacency.items():
