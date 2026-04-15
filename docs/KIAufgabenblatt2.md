@@ -12,13 +12,13 @@ Praktikum zum Modul Künstliche Intelligenz
 - In diesem Praktikum werden Suchalgorithmen praktisch eingesetzt. Diese bilden die Grundlage für eine Vielzahl klassischer KI-Anwendungen.
 - Sie betrachten sowohl einen einzelnen Agenten als auch ein Multi-Agenten-System.
 
-> **Hinweis:**  
+> :information_source: **Hinweis:**  
 > Die Aufgaben der Aufgabenblätter 1 und 2 bauen aufeinander auf. Beide enthalten Hinweise und Vorgehensweisen, die die erfolgreiche Bearbeitung unterstützen sollen.  
 > *Lesen Sie die Aufgabenstellung sorgfältig durch und berücksichtigen Sie die Inhalte der Vorlesung!*
 
 ---
 
-## Aufgabe P5 – Problembeschreibung
+## :mortar_board: Aufgabe P5 – Problembeschreibung
 
 Modellieren Sie das Spiel **„Dots and Boxes“** als ein Problembeschreibung (vgl. Vorlesung) und entwerfen Sie einen Agenten, der die Züge sowohl für den Spieler in **Grün** als auch in **Rot** ausführt.
 
@@ -28,16 +28,16 @@ Beachten Sie dabei folgende Vorgaben:
 - Beschreiben Sie die Zustände und ihre Aktionen detailliert und geben Sie die Anzahl der möglichen Aktionen abhängig vom Zustand an.
 - Das Ziel ist, einen Spielzustand **„unentschieden“** zu erreichen, wobei abwechselnd die Kanten *Grün* und *Rot* auf dem Spielfeld platziert werden.  
   Erläutern Sie anhand eines Beispielpfades im Suchraum, wie der Zustand „unentschieden“ erreicht werden kann.
-- Ersetzen Sie die zwei Spieler durch einen **„Unentschieden-Agenten“**, der die Spielzüge beider Spieler übernimmt.
+- Ersetzen Sie die zwei Spieler durch **einen „Unentschieden-Agenten“**, der die Spielzüge beider Spieler übernimmt.
 
 ### Dokumentation
 
-Erstellen Sie hierzu eine Dokumentation, die sich an der in der Vorlesung beschriebenen Problembeschreibung orientiert.
+Erstellen Sie hierzu eine Dokumentation, die sich an der Beschreibung eines Problems gemäß der Vorlesung orientiert.
 Laden Sie Ihre Dokumentation vorab in Ihrem Git-Repository unter `docs/` hoch.   
 
 ---
 
-## Aufgabe P6 – Baum- vs. Graph-Suche[^1]
+## :mortar_board: Aufgabe P6 – Baum- vs. Graph-Suche[^1]
 
 Wählen Sie eine geeignete Struktur des Suchraums für das Problem aus der vorangegangenen Aufgabe:
 
@@ -50,16 +50,16 @@ Wählen Sie eine geeignete Struktur des Suchraums für das Problem aus der voran
 
 ---
 
->**Hinweise:**
+> :information_source: **Hinweise:**
 > - In den nun folgenden Aufgaben des Aufgabenblattes ist **keine** Dokumentation im Git bereitzustellen.  
   Wir weisen in den Aufgabenstellungen explizit darauf hin, wenn eine Dokumentation im Git bereitzustellen ist.
-> - Achten Sie weiterhin auf die Dokumentation Ihres Codes.
+> - Achten Sie weiterhin auf die Dokumentation Ihres Codes und die Erstellung eines Changelogs.
 > - Ihre Dokumentation sollte unter anderem die Diskussion Ihrer Lösung unterstützen.  
   Sie können die Dokumentation beispielsweise nutzen, um den grundlegenden Ablauf und die Struktur eines Algorithmus darzustellen.
 
 ---
 
-## Aufgabe P7 – Uninformierte Suche
+## :mortar_board: Aufgabe P7 – Uninformierte Suche
 
 Realisieren Sie den **Uniform-Cost-Search**-Algorithmus:
 
@@ -69,7 +69,7 @@ Realisieren Sie den **Uniform-Cost-Search**-Algorithmus:
   Achten Sie darauf, die Funktion der Pfadkosten geeignet zu formulieren und in Ihre Klasse zu integrieren.
 - Integrieren Sie den Algorithmus in Ihr „Dots and Boxes“-Spiel.
 
-> **Hinweise**
+> :information_source: **Hinweise**
 > - Dieser Algorithmus ist für das Spiel „Dots and Boxes“ mit den üblichen Spielregeln nur eingeschränkt geeignet, da es **kein Multi-Player-Algorithmus** ist.
 > - Orientieren Sie sich bei der Implementierung des Uniform-Cost-Search-Algorithmus an der Variante, die in der Vorlesung vorgestellt wurde.
 > - Sollten Sie von der Vorlesungsvariante abweichen (z. B. Verwendung einer Variante aus einer Internet-Recherche), so zeigen Sie die Gemeinsamkeiten und Unterschiede der Variante auf.  
@@ -83,7 +83,7 @@ Führen Sie den ersten Spielzug **zufällig** aus, anstatt den Zug durch den Alg
 
 ---
 
-## Aufgabe P8 – Minimax-Suche
+## :mortar_board: Aufgabe P8 – Minimax-Suche
 
 Zuvor haben Sie einen Agenten betrachtet, der das Ziel „unentschieden“ verfolgt.  
 In dieser Aufgabe orientieren wir uns an den traditionellen Spielregeln von „Dots and Boxes“, bei denen zwei kompetitive Spieler jeweils den Sieg anstreben.  
@@ -103,12 +103,12 @@ Eine **Multi-Agenten-Lösung** ist hier besonders geeignet.
 - Die Berechnung eines Spielzugs durch den Minimax-Algorithmus basiert auf der Auswahl eines Pfades durch den Suchraum.  
   Geben Sie für **jeden Spielzug** die zugehörigen Zustände („Knoten“, siehe Aufgabe „Problembeschreibung“) des gewählten Pfades an.
 
-> **Hinweis:**  
+> :information_source: **Hinweis:**  
 > Es kann notwendig sein, das Spielfeld mit einigen Kanten vorzubelegen. – Überlegen Sie: *Warum?*
 
 ---
 
-## Aufgabe P9 – Übertragung
+## :mortar_board: Aufgabe P9 – Übertragung
 
 Welche Schritte sind notwendig, um den Minimax-Algorithmus auf das Spiel **„Vier gewinnt“** anzuwenden?
 
