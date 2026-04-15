@@ -33,8 +33,14 @@ class GraphController:
                     point_index += 1
         self.add_edges()
 
-    def add_edges(self) -> None:
 
+
+    def add_edges(self) -> None:
+        """     Hier wird fest codiert, welche Nachbarpunkte verbunden sind.
+                Das entspricht den möglichen Linien, die Spieler auswählen dürfen.
+                Diese Methode funktioniert aktuell nur für genau 9 Punkte,
+
+        """
         points = self.graph.nodes
         if len(points) == 9:
             edges = [
@@ -50,6 +56,18 @@ class GraphController:
                 self.graph.add_edge(edge.point_one, edge.point_two)
 
     def __select_edge(self, a: Point, b: Point, color: str) -> bool:
+        """
+        Markiert eine Kante zwischen zwei Punkten als gewählt
+        Ein Spieler wählt im Spiel zwei Punktnummern.
+        Diese Methode sucht die passende Kante und markiert sie als besetzt.
+        Rückgabe:
+        - True, wenn die Kante existiert und markiert wurde
+        - False, wenn keine passende Kante gefunden wurde
+        Problem im aktuellen Code:
+        Es wird nicht geprüft, ob die Kante schon ausgewählt wurde.
+        Dadurch könnte dieselbe Kante mehrfach gewählt werden.
+        #TODO check if edge already selected
+        """
         edge = Edge(a, b)
         edges = self.graph.get_edges()
 
@@ -62,18 +80,28 @@ class GraphController:
         return False
 
     def select_edge_point_number(self, a: int, b: int, color: str):
+        """
+        Der Spieler gibt z.B. '0' und '1' ein.
+        Daraus werden self.graph.nodes[0] und self.graph.nodes[1].
+        """
         return self.__select_edge(self.graph.nodes[a],
                                   self.graph.nodes[b],
                                   color)
 
     def check_box(self):
+        """
+        Soll später prüfen, ob durch die letzte Kante ein Kästchen geschlossen wurde.
+        #TODO if box is fake
+        """
         pass
 
     def __repr__(self) -> str:
+        """wie tostring in Java"""
         return repr(self.graph)
 
 
 class PlayerController:
+    """Verwaltet die Spielerreihenfolge und den aktuellen Spieler."""
     def __init__(self, player1: Player, player2: Player):
         self.player1 = player1
         self.player2 = player2
@@ -94,6 +122,16 @@ class PlayerController:
 
 
 class Game:
+    """
+    Zentrale Spielsteuerung.
+    Spielkontext:
+    Diese Klasse verbindet:
+    - GraphController = Spiellogik / Spielfeld
+    - PlayerController = Spielerverwaltung
+    - GameView = Darstellung
+
+    Sie enthält die Hauptspielschleife.
+    """
     def __init__(self, graph_controller: GraphController,
                  player_controller: PlayerController,
                  view: GameView):
@@ -103,7 +141,9 @@ class Game:
         self.view = view
 
     def start(self):
-
+        """
+        zentrale spielschleife
+        """
         while True:
             edge = self.player_controller.get_player_edge()
             if self.graph_controller.select_edge_point_number(
@@ -111,7 +151,7 @@ class Game:
                     self.player_controller.get_color()):
                 # self.view.update_print_array()
                 self.graph_controller.check_box()
-                self.player_controller.switch_player()
+                self.player_controller.switch_player() #TODO no switch when box completed extra move
                 self.view.display(self.graph_controller.grid_size,
                                   self.graph_controller.graph.adjacency)
 

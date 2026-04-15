@@ -11,10 +11,18 @@ class Point:
     def __repr__(self) -> str:
         return f"{self.name}({self.position})"
 
+    """ 
+    alte Implementierung
     def __eq__(self, o):
         if self.position[0] == o.position[0] and self.position[1] == o.position[1]:
             return True
         return False
+    """
+    #ungerichtete Kanten Zwischen Punkt 0 und 1 ist dieselbe Linie wie zwischen 1 und 0.
+    def __eq__(self, o):
+        same_direction = self.point_one == o.point_one and self.point_two == o.point_two
+        reverse_direction = self.point_one == o.point_two and self.point_two == o.point_one
+        return same_direction or reverse_direction
 
 
 @dataclass
