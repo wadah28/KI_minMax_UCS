@@ -79,10 +79,15 @@ class Graph:
         self.adjacency[b].append(edge_ba)
 
     def get_edges(self) -> List[Edge]:
+
         edge_list = []
         for ed_list in self.adjacency.values():
             for edge in ed_list:
-                edge_list.append(edge)
+                """
+                       Damit jede echte Linie nur einmal zurückgegeben wird.
+                """
+                if not any(edge == existing for existing in edge_list):
+                    edge_list.append(edge)
         return edge_list
 
     def __repr__(self) -> str:
