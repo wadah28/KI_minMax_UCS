@@ -51,8 +51,8 @@ Wählen Sie eine geeignete Struktur des Suchraums für das Problem aus der voran
 ---
 
 >**Hinweise:**
-> - In den nun folgenden Aufgaben des Aufgabenblattes ist **keine** Dokumentation im ILIAS bereitzustellen.  
-  Wir weisen in den Aufgabenstellungen explizit darauf hin, wenn eine Dokumentation im ILIAS bereitzustellen ist.
+> - In den nun folgenden Aufgaben des Aufgabenblattes ist **keine** Dokumentation im Git bereitzustellen.  
+  Wir weisen in den Aufgabenstellungen explizit darauf hin, wenn eine Dokumentation im Git bereitzustellen ist.
 > - Achten Sie weiterhin auf die Dokumentation Ihres Codes.
 > - Ihre Dokumentation sollte unter anderem die Diskussion Ihrer Lösung unterstützen.  
   Sie können die Dokumentation beispielsweise nutzen, um den grundlegenden Ablauf und die Struktur eines Algorithmus darzustellen.
@@ -70,7 +70,6 @@ Realisieren Sie den **Uniform-Cost-Search**-Algorithmus:
 - Integrieren Sie den Algorithmus in Ihr „Dots and Boxes“-Spiel.
 
 > **Hinweise**
-
 > - Dieser Algorithmus ist für das Spiel „Dots and Boxes“ mit den üblichen Spielregeln nur eingeschränkt geeignet, da es **kein Multi-Player-Algorithmus** ist.
 > - Orientieren Sie sich bei der Implementierung des Uniform-Cost-Search-Algorithmus an der Variante, die in der Vorlesung vorgestellt wurde.
 > - Sollten Sie von der Vorlesungsvariante abweichen (z. B. Verwendung einer Variante aus einer Internet-Recherche), so zeigen Sie die Gemeinsamkeiten und Unterschiede der Variante auf.  
@@ -80,7 +79,7 @@ Realisieren Sie den **Uniform-Cost-Search**-Algorithmus:
 ### Optionale Variante der Lösung
 
 Führen Sie den ersten Spielzug **zufällig** aus, anstatt den Zug durch den Algorithmus auswählen zu lassen.  
--Was bewirkt diese Änderung?
+*Was bewirkt diese Änderung?*
 
 ---
 
