@@ -11,18 +11,10 @@ class Point:
     def __repr__(self) -> str:
         return f"{self.name}({self.position})"
 
-    """ 
-    alte Implementierung
     def __eq__(self, o):
         if self.position[0] == o.position[0] and self.position[1] == o.position[1]:
             return True
         return False
-    """
-    #ungerichtete Kanten Zwischen Punkt 0 und 1 ist dieselbe Linie wie zwischen 1 und 0.
-    def __eq__(self, o):
-        same_direction = self.point_one == o.point_one and self.point_two == o.point_two
-        reverse_direction = self.point_one == o.point_two and self.point_two == o.point_one
-        return same_direction or reverse_direction
 
 
 @dataclass
@@ -79,23 +71,11 @@ class Graph:
         self.adjacency[b].append(edge_ba)
 
     def get_edges(self) -> List[Edge]:
-
         edge_list = []
         for ed_list in self.adjacency.values():
             for edge in ed_list:
-                """
-                       Damit jede echte Linie nur einmal zurückgegeben wird.
-                """
-                if not any(edge == existing for existing in edge_list):
-                    edge_list.append(edge)
+                edge_list.append(edge)
         return edge_list
-
-    def get_edge(self, a: Point, b: Point):
-        target = Edge(a, b)
-        for edge in self.get_edges():
-            if edge == target:
-                return edge
-        return None
 
     def __repr__(self) -> str:
         out = "Graph adjacency list:\n"

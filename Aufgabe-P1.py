@@ -1,4 +1,4 @@
-from Objekte import *
+import Objekte
 
 # Funktionen
 def vorstellen(objekt):
@@ -16,8 +16,8 @@ def getGeruescher(objekt):
 
 # Liste
 objekteneList = [
-    Hund("jak", 2), Ente("koki", 3), Roboter("chatGPT", 4),
-    Hund("max", 10), Ente("Rosa", 5), Roboter("Deepseek", 2)
+    Objekte.Hund("jak", 2), Objekte.Ente("koki", 3), Objekte.Roboter("chatGPT", 4),
+    Objekte.Hund("max", 10), Objekte.Ente("Rosa", 5), Objekte.Roboter("Deepseek", 2)
 ]
 
 # 1. Duck Typing
