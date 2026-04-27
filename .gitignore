@@ -1,0 +1,32 @@
+# Virtuelle Umgebung
+.venv/
+venv/
+env/
+
+# Python Cache / Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Distribution / Build
+build/
+dist/
+*.egg-info/
+
+# IDE: PyCharm / IntelliJ
+.idea/
+*.iml
+# macOS / Linux / Windows
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Optional: lokale Umgebungsdateien
+.env

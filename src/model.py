@@ -12,9 +12,7 @@ class Point:
         return f"{self.name}({self.position})"
 
     def __eq__(self, o):
-        if self.position[0] == o.position[0] and self.position[1] == o.position[1]:
-            return True
-        return False
+        return self.position == o.position
 
 
 @dataclass
@@ -44,11 +42,10 @@ class Edge:
         self.selected = True
         self.color = color
 
-    def __eq__(self, o):
-        print(o, self)
-        if self.point_one == o.point_one and self.point_two == o.point_two:
-            return True
-        return False
+    def __eq__(self, o):   #gefixt
+        same_direction = self.point_one == o.point_one and self.point_two == o.point_two
+        reverse_direction = self.point_one == o.point_two and self.point_two == o.point_one
+        return same_direction or reverse_direction
 
 
 class Graph:
@@ -71,11 +68,23 @@ class Graph:
         self.adjacency[b].append(edge_ba)
 
     def get_edges(self) -> List[Edge]:
+
         edge_list = []
         for ed_list in self.adjacency.values():
             for edge in ed_list:
-                edge_list.append(edge)
+                """
+                       Damit jede echte Linie nur einmal zurückgegeben wird.
+                """
+                if not any(edge == existing for existing in edge_list):
+                    edge_list.append(edge)
         return edge_list
+
+    def get_edge(self, a: Point, b: Point):
+        target = Edge(a, b)
+        for edge in self.get_edges():
+            if edge == target:
+                return edge
+        return None
 
     def __repr__(self) -> str:
         out = "Graph adjacency list:\n"
