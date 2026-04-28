@@ -1,7 +1,5 @@
-from asyncio import graph
 from dataclasses import dataclass
 import random
-from operator import pos
 
 from model import Graph, Edge
 
@@ -85,6 +83,13 @@ class Problem:
     def __init__(self, graph):
         self.graph = graph
 
+        self.possible_boxes = [
+            (0, 1, 3, 4),
+            (1, 2, 4, 5),
+            (3, 4, 6, 7),
+            (4, 5, 7, 8)
+        ]
+
     def actions(self, state: State) -> list[tuple[tuple[int, int], tuple[int, int]]]:
         available_actions = []
         Alledges = self.graph.get_edges()
@@ -98,3 +103,58 @@ class Problem:
                 available_actions.append(action)
 
         return available_actions #liste von freie punkten koordinaten
+
+    def switch_player(self, current_color: str) -> str:
+        if current_color == "red":
+            return "green"
+        if current_color == "green":
+            return "red"
+        raise ValueError(f"Unbekannte Farbe: {current_color}")
+
+    def edge_action_by_node_index(self , x : int , y : int):
+        p1 = self.graph.nodes[x].position
+        p2 = self.graph.nodes[y].position
+        return tuple(sorted((p1, p2)))
+
+    def is_box_closed_by_state(self , box , selected_edges) -> bool:
+        p1 ,p2,p3,p4 = box
+        top = self.edge_action_by_node_index(p1, p2)
+        bottom = self.edge_action_by_node_index(p1, p3)
+        left = self.edge_action_by_node_index(p2, p4)
+        right = self.edge_action_by_node_index(p3, p4)
+        if (top in selected_edges
+            and bottom in selected_edges
+            and left in selected_edges
+            and right in selected_edges):
+            return True
+        else : return False
+
+    #Übergangsfunktion RESULT(s, a)
+    def result(self , state : State , action : tuple[tuple[int, int], ...]) -> tuple[tuple[int, int], ...]:
+        new_selected_edges = set(state.selected_edges)
+        new_selected_edges.add(action) #die neue action als selected betrachten
+        new_edge_colors =list(state.edge_colors) #bekommt die farben
+        new_edge_colors.append((action , state.current_color)) #für diese action nimm diese color als tupek (  ... ,(action , current color) , ... )   )
+        new_box_owner = list(state.box_owner)
+        colsed_box= False  #zu prüfen ob ein box fertig ist
+
+        for i in range(len(self.possible_boxes)):
+            box = self.possible_boxes[i]
+            if new_box_owner[i] != "" :
+                continue
+            if self.is_box_closed_by_state(box , new_selected_edges):
+                new_box_owner[i] = state.current_color
+                colsed_box = True
+
+        if colsed_box:
+            next_color = state.current_color
+        else : next_color = self.switch_player(state.current_color)
+        return State(
+            selected_edges=frozenset(new_selected_edges),
+            edge_colors=tuple(new_edge_colors),
+            box_owner=tuple(new_box_owner),
+            current_color=next_color
+        )
+
+
+
