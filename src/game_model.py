@@ -1,5 +1,10 @@
+from asyncio import graph
 from dataclasses import dataclass
 import random
+from operator import pos
+
+from model import Graph, Edge
+
 
 @dataclass
 class Player:
@@ -62,3 +67,34 @@ class RandomPlayer(Player):
         print(f"{self.name} (NPC) wählt: {p1 + 1} - {p2 + 1}")
 
         return (p1, p2)
+@dataclass(frozen=True)
+class State:
+    #Alle Kanten, die schon gesetzt wurden.
+    #Beispiel: frozenset({(0, 1), (1, 2), (3, 4)})
+    selected_edges: frozenset[tuple[int, int]]
+    #Welche Farbe jede gesetzte Kante hat.
+    edge_colors: tuple[tuple[tuple[int, int], str], ...]
+    #Welche Box wem gehört.
+    #Beispiel bei 4 Boxen:
+    #("", "", "green", "red")
+    box_owner: tuple[str, ...]
+    #Wer jetzt dran ist.
+    current_color: str
+
+class Problem:
+    def __init__(self, graph):
+        self.graph = graph
+
+    def actions(self, state: State) -> list[tuple[tuple[int, int], tuple[int, int]]]:
+        available_actions = []
+        Alledges = self.graph.get_edges()
+        for edge in Alledges:
+            p1 = edge.point_one.position
+            p2 = edge.point_two.position
+
+            action = tuple(sorted((p1, p2)))
+
+            if action not in state.selected_edges:
+                available_actions.append(action)
+
+        return available_actions #liste von freie punkten koordinaten
