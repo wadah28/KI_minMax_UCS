@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 import random
-
 from model import Graph, Edge
 
+Position = tuple[int, int]
+Action = tuple[Position, Position]
 
 @dataclass
 class Player:
@@ -69,9 +70,9 @@ class RandomPlayer(Player):
 class State:
     #Alle Kanten, die schon gesetzt wurden.
     #Beispiel: frozenset({(0, 1), (1, 2), (3, 4)})
-    selected_edges: frozenset[tuple[int, int]]
+    selected_edges: frozenset[Action]
     #Welche Farbe jede gesetzte Kante hat.
-    edge_colors: tuple[tuple[tuple[int, int], str], ...]
+    edge_colors: tuple[tuple[Action, str], ...]
     #Welche Box wem gehört.
     #Beispiel bei 4 Boxen:
     #("", "", "green", "red")
@@ -119,9 +120,9 @@ class Problem:
     def is_box_closed_by_state(self , box , selected_edges) -> bool:
         p1 ,p2,p3,p4 = box
         top = self.edge_action_by_node_index(p1, p2)
-        bottom = self.edge_action_by_node_index(p1, p3)
-        left = self.edge_action_by_node_index(p2, p4)
-        right = self.edge_action_by_node_index(p3, p4)
+        left = self.edge_action_by_node_index(p1, p3)
+        right = self.edge_action_by_node_index(p2, p4)
+        bottom = self.edge_action_by_node_index(p3, p4)
         if (top in selected_edges
             and bottom in selected_edges
             and left in selected_edges
@@ -133,8 +134,10 @@ class Problem:
     def result(self , state : State , action : tuple[tuple[int, int], ...]) -> tuple[tuple[int, int], ...]:
         new_selected_edges = set(state.selected_edges)
         new_selected_edges.add(action) #die neue action als selected betrachten
+
         new_edge_colors =list(state.edge_colors) #bekommt die farben
         new_edge_colors.append((action , state.current_color)) #für diese action nimm diese color als tupek (  ... ,(action , current color) , ... )   )
+
         new_box_owner = list(state.box_owner)
         colsed_box= False  #zu prüfen ob ein box fertig ist
 
@@ -155,6 +158,18 @@ class Problem:
             box_owner=tuple(new_box_owner),
             current_color=next_color
         )
+
+    def is_terminal(self, state: State) -> bool:
+        return len(self.actions(state)) == 0 #ob das Ende erreictt wurde
+    def is_draw(self , state : State) -> bool:
+        player1 = state.box_owner.count("green")
+        player2 = state.box_owner.count("red") #wird gezahlt zb. ("red","green","red","green")
+        if player1 == player2: #dann ist hier 2 == 2 ist true
+            return True
+        else: return False
+
+    def goal_test(self ,state : State) -> bool:
+        return self.is_terminal(state) and self.unentschieden(state)
 
 
 
