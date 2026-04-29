@@ -41,8 +41,6 @@ class Player:
 
             return (point1, point2)
 
-
-
 class RandomPlayer(Player):
     """
     NPC-Spieler, der zufällige gültige Spielzüge auswählt.
@@ -118,7 +116,6 @@ class Problem:
         if current_color == "green":
             return "red"
         raise ValueError(f"Unbekannte Farbe: {current_color}")
-
     def edge_action_by_node_index(self , x : int , y : int):
         p1 = self.graph.nodes[x].position
         p2 = self.graph.nodes[y].position
@@ -137,7 +134,7 @@ class Problem:
             return True
         else : return False
 
-    #Übergangsfunktion RESULT(s, a)
+    #Übergangsfunktion RESULT(s, a) => neue Zustand
     def result(self, state: State, action: Action) -> State:
         new_selected_edges = set(state.selected_edges)
         new_selected_edges.add(action) #die neue action als selected betrachten
