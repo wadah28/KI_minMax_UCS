@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 import random
+from dataclasses import dataclass, field
+import heapq
+import itertools
 from model import Graph, Edge
 
 Position = tuple[int, int]
@@ -66,19 +69,21 @@ class RandomPlayer(Player):
         print(f"{self.name} (NPC) wählt: {p1 + 1} - {p2 + 1}")
 
         return (p1, p2)
+
+
 @dataclass(frozen=True)
 class State:
-    #Alle Kanten, die schon gesetzt wurden.
-    #Beispiel: frozenset({(0, 1), (1, 2), (3, 4)})
     selected_edges: frozenset[Action]
-    #Welche Farbe jede gesetzte Kante hat.
-    edge_colors: tuple[tuple[Action, str], ...]
-    #Welche Box wem gehört.
-    #Beispiel bei 4 Boxen:
-    #("", "", "green", "red")
     box_owner: tuple[str, ...]
-    #Wer jetzt dran ist.
     current_color: str
+
+@dataclass(frozen=True)
+class SearchNode:
+    state: State
+    parent: "SearchNode | None"
+    action: Action | None
+    path_cost: int
+
 
 class Problem:
     def __init__(self, graph):
@@ -91,15 +96,17 @@ class Problem:
             (4, 5, 7, 8)
         ]
 
-    def actions(self, state: State) -> list[tuple[tuple[int, int], tuple[int, int]]]:
-        available_actions = []
-        Alledges = self.graph.get_edges()
-        for edge in Alledges:
+        self.all_actions = []
+
+        for edge in self.graph.get_edges(): #damit nicht jedes mal get_edges aufgerufen wird
             p1 = edge.point_one.position
             p2 = edge.point_two.position
-
             action = tuple(sorted((p1, p2)))
+            self.all_actions.append(action)
 
+    def actions(self, state: State) -> list[Action]:
+        available_actions = []
+        for action in self.all_actions: #all_action die liste alle möglichen edges
             if action not in state.selected_edges:
                 available_actions.append(action)
 
@@ -131,15 +138,15 @@ class Problem:
         else : return False
 
     #Übergangsfunktion RESULT(s, a)
-    def result(self , state : State , action : tuple[tuple[int, int], ...]) -> tuple[tuple[int, int], ...]:
+    def result(self, state: State, action: Action) -> State:
         new_selected_edges = set(state.selected_edges)
         new_selected_edges.add(action) #die neue action als selected betrachten
 
-        new_edge_colors =list(state.edge_colors) #bekommt die farben
-        new_edge_colors.append((action , state.current_color)) #für diese action nimm diese color als tupek (  ... ,(action , current color) , ... )   )
+        #new_edge_colors =list(state.edge_colors) #bekommt die farben
+        #new_edge_colors.append((action , state.current_color)) #für diese action nimm diese color als tupek (  ... ,(action , current color) , ... )   )
 
         new_box_owner = list(state.box_owner)
-        colsed_box= False  #zu prüfen ob ein box fertig ist
+        closed_box = False
 
         for i in range(len(self.possible_boxes)):
             box = self.possible_boxes[i]
@@ -147,14 +154,13 @@ class Problem:
                 continue
             if self.is_box_closed_by_state(box , new_selected_edges):
                 new_box_owner[i] = state.current_color
-                colsed_box = True
+                closed_box = True
 
-        if colsed_box:
+        if closed_box:
             next_color = state.current_color
         else : next_color = self.switch_player(state.current_color)
         return State(
             selected_edges=frozenset(new_selected_edges),
-            edge_colors=tuple(new_edge_colors),
             box_owner=tuple(new_box_owner),
             current_color=next_color
         )
@@ -169,7 +175,93 @@ class Problem:
         else: return False
 
     def goal_test(self ,state : State) -> bool:
-        return self.is_terminal(state) and self.unentschieden(state)
+        return self.is_terminal(state)   and self.is_draw(state)
+    def step_cost(self, state: State, action: Action, next_state: State) -> int:
+        return 1
 
 
 
+
+class UniformCostSearch:
+
+    def search(self,problem: Problem,initial_state: State ) -> list[tuple[Action, str]] | None:
+
+        start_node = SearchNode(
+            state=initial_state,
+            parent=None,
+            action=None,
+            path_cost=0
+        )
+
+        counter = itertools.count()
+        frontier = []
+
+        heapq.heappush(
+            frontier,
+            (start_node.path_cost, next(counter), start_node)
+        )
+
+        frontier_states = {
+            initial_state: start_node.path_cost
+        }
+
+        explored = set()
+
+        while True:
+            if not frontier:
+                return None
+
+            current_cost, _, node = heapq.heappop(frontier)
+
+            if node.state in explored:
+                continue
+
+            if problem.goal_test(node.state):
+                return self.solution(node)
+
+            explored.add(node.state)
+
+            for action in problem.actions(node.state):
+                child_state = problem.result(node.state, action)
+
+                new_cost = node.path_cost + problem.step_cost(
+                    node.state,
+                    action,
+                    child_state
+                )
+
+                child_node = SearchNode(
+                    state=child_state,
+                    parent=node,
+                    action=action,
+                    path_cost=new_cost
+                )
+
+                old_cost = frontier_states.get(child_state)
+
+                if child_state not in explored and old_cost is None:
+                    frontier_states[child_state] = child_node.path_cost
+
+                    heapq.heappush(
+                        frontier,
+                        (child_node.path_cost, next(counter), child_node)
+                    )
+
+                elif child_state not in explored and new_cost < old_cost:
+                    frontier_states[child_state] = child_node.path_cost
+
+                    heapq.heappush(
+                        frontier,
+                        (child_node.path_cost, next(counter), child_node)
+                    )
+
+    def solution(self, node: SearchNode) -> list[tuple[Action, str]]:
+        path = []
+
+        while node.parent is not None:
+            color = node.parent.state.current_color
+            path.append((node.action, color))
+            node = node.parent
+
+        path.reverse()
+        return path
