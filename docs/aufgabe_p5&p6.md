@@ -40,3 +40,8 @@ immer abwechselnd
 - Sn: alle Kanten gesetzt & gleiche Anzahl Boxen für grün und rot -> unentschieden
 
 
+## Baum vs Graph-Suche
+derselbe Spielzustand kann über verscheidene Wege entstehen.
+also mehrere wege -> gleicher Zustand.
+und vom logik des Spieles kann ein Agent aknn nur Kanten setzten die noch nicht gesetzt wurden
+Daher ist eine Graph-Suche sinnvoll, um doppelte Zustände zu vermeiden.
