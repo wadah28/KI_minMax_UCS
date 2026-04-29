@@ -182,7 +182,8 @@ class Problem:
 class UniformCostSearch:
 
     def search(self,problem: Problem,initial_state: State ) -> list[tuple[Action, str]] | None:
-
+        #2 _node → a node with STATE = _problem.INITIAL-STATE
+        # PATH-COST = 0
         start_node = SearchNode(
             state=initial_state,
             parent=None,
@@ -191,66 +192,52 @@ class UniformCostSearch:
         )
 
         counter = itertools.count()
+        #3 _frontier <-- a proposition queue ordered by the PATH-cost with Node as the only element
         frontier = []
+        heapq.heappush(frontier,(start_node.path_cost, next(counter), start_node))
+        best_cost_dictionary = {initial_state: start_node.path_cost}
 
-        heapq.heappush(
-            frontier,
-            (start_node.path_cost, next(counter), start_node)
-        )
-
-        frontier_states = {
-            initial_state: start_node.path_cost
-        }
-
+        #4 _explorad <-- an empty set
         explored = set()
 
+        #6 loop do
         while True:
+
+            #7-8 if EMPTY? (_frontier) then return Failure
             if not frontier:
                 return None
-
+            #10 _node <-- pop (_frontier ) chooses the lowest PATH-cost in _frontier
             current_cost, _, node = heapq.heappop(frontier)
 
+            #Verhindert, dass ein bereits untersuchter Zustand erneut expandiert wird
             if node.state in explored:
                 continue
 
+            #11-12 if -problem.GOAL-TEST (node.state)  then return SOULOTION (_node)
             if problem.goal_test(node.state):
                 return self.solution(node)
 
+            #13 add _node.STATE to _explored
             explored.add(node.state)
 
+            #15 for each _action in _problem.ACTIONS ( _node.STATE ) do
             for action in problem.actions(node.state):
+
+                #16 -child <-- CHILD-NODE (_problem , _node , _action )
                 child_state = problem.result(node.state, action)
+                new_cost = node.path_cost + problem.step_cost(node.state,action,child_state)
+                child_node = SearchNode(state=child_state, parent=node, action=action, path_cost=new_cost)
+                old_cost = best_cost_dictionary.get(child_state)
 
-                new_cost = node.path_cost + problem.step_cost(
-                    node.state,
-                    action,
-                    child_state
-                )
-
-                child_node = SearchNode(
-                    state=child_state,
-                    parent=node,
-                    action=action,
-                    path_cost=new_cost
-                )
-
-                old_cost = frontier_states.get(child_state)
-
+                #17-18 if -child.STATE not in _explored or _frontier then _fronter <-- INSERT (_frontier , _child)
                 if child_state not in explored and old_cost is None:
-                    frontier_states[child_state] = child_node.path_cost
+                    best_cost_dictionary[child_state] = child_node.path_cost
+                    heapq.heappush(frontier,(child_node.path_cost, next(counter), child_node))
 
-                    heapq.heappush(
-                        frontier,
-                        (child_node.path_cost, next(counter), child_node)
-                    )
-
+                #19-20 else if _child.STATE is in -frontier with higher PATH-COST then replace that frontier node with _child
                 elif child_state not in explored and new_cost < old_cost:
-                    frontier_states[child_state] = child_node.path_cost
-
-                    heapq.heappush(
-                        frontier,
-                        (child_node.path_cost, next(counter), child_node)
-                    )
+                    best_cost_dictionary[child_state] = child_node.path_cost
+                    heapq.heappush(frontier,(child_node.path_cost, next(counter), child_node))
 
     def solution(self, node: SearchNode) -> list[tuple[Action, str]]:
         path = []
