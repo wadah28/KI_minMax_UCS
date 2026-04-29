@@ -1,6 +1,6 @@
 from termcolor import colored
 
-from game_model import Player, RandomPlayer
+from game_model import Player, RandomPlayer, State, Problem, UniformCostSearch, Action, UniformCostSearch
 from model import Graph, Point, Edge
 from view import GameView
 
@@ -160,7 +160,38 @@ class PlayerController:
 
     def add_score(self, points: int):
         self.current_player.score += points
+    def action_to_node_numbers(graph: Graph, action: Action) -> tuple[int, int]:
+        """
+        Wandelt eine Action aus Koordinaten in Node-Nummern um.
 
+        Beispiel:
+            action = ((0, 0), (0, 2))
+
+        Daraus wird:
+            (0, 1)
+
+        Weil:
+            Node 0 hat Koordinate (0, 0)
+            Node 1 hat Koordinate (0, 2)
+        """
+
+        p1_position = action[0]
+        p2_position = action[1]
+
+        node1 = None
+        node2 = None
+
+        for index, point in enumerate(graph.nodes):
+            if point.position == p1_position:
+                node1 = index
+
+            if point.position == p2_position:
+                node2 = index
+
+        if node1 is None or node2 is None:
+            raise ValueError(f"Action passt zu keinem Node: {action}")
+
+        return node1, node2
 
 class Game:
     """
@@ -231,21 +262,144 @@ class Game:
             print(f"Sieger: {p2.name}")
         else:
             print("Unentschieden")
+    def replay_path(self, path: list[tuple[Action, str]]) -> None:
+        """
+        Spielt den UCS-Pfad auf dem echten Grid nach.
+        Benutzt dieselbe Logik wie das normale Spiel:
+        - Kante setzen
+        - Box prüfen
+        - View anzeigen
+        """
+
+        scores = {
+            "red": 0,
+            "green": 0
+        }
+
+        print("Startzustand:")
+        self.view.display(
+            self.graph_controller.grid_size,
+            self.graph_controller.graph.adjacency,
+            self.boxes
+        )
+
+        for move_number, (action, color) in enumerate(path, start=1):
+            node1, node2 = PlayerController.action_to_node_numbers(
+                self.graph_controller.graph,
+                action
+            )
+
+            print()
+            print("=" * 40)
+            print(f"Zug {move_number}")
+            print(f"Farbe: {colored(color.upper(), color)}")
+            print(f"Kante: Node {node1} - Node {node2}")
+            print(f"Koordinaten: {action}")
+
+            success = self.graph_controller.select_edge_point_number(
+                node1,
+                node2,
+                color
+            )
+
+            if not success:
+                print("Fehler beim Setzen der Kante.")
+                return
+
+            boxes_completed = self.graph_controller.check_box()
+
+            for box_index in self.graph_controller.boxes:
+                if self.boxes[box_index] == " ":
+                    if color == "red":
+                        self.boxes[box_index] = colored("R", "red")
+                    elif color == "green":
+                        self.boxes[box_index] = colored("G", "green")
+                    else:
+                        self.boxes[box_index] = "?"
+
+            if boxes_completed > 0:
+                scores[color] += boxes_completed
+                print(f"{colored(color.upper(), color)} hat {boxes_completed} Box(en) geschlossen.")
+            else:
+                print("Keine Box geschlossen.")
+
+            self.view.display(
+                self.graph_controller.grid_size,
+                self.graph_controller.graph.adjacency,
+                self.boxes
+            )
+
+            print(f"Score red: {scores['red']}")
+            print(f"Score green: {scores['green']}")
+
+        print()
+        print("=" * 40)
+        print("Replay beendet.")
+        print(f"Endstand red: {scores['red']}")
+        print(f"Endstand green: {scores['green']}")
+
+        if scores["red"] > scores["green"]:
+            print(colored("Sieger: red", "red"))
+        elif scores["green"] > scores["red"]:
+            print(colored("Sieger: green", "green"))
+        else:
+            print("Unentschieden")
 
 
 if __name__ == "__main__":
 
     graph_controller = GraphController(grid_size=5)
+    uniform_cost_search = UniformCostSearch()
+    problem = Problem(graph_controller.graph)
 
-    player_controller = PlayerController(
-        player1=Player("Player 1", "red"),
-        player2=RandomPlayer("NPC", "green", graph_controller.graph)
+    initial_state = State(
+        selected_edges=frozenset(),
+        box_owner=("", "", "", ""),
+        current_color="red"
     )
 
-    game = Game(
-        graph_controller=graph_controller,
-        player_controller=player_controller,
-        view=GameView()
-    )
+    path = uniform_cost_search.search(problem, initial_state) ##################################################
 
-    game.start()
+    if path is None:
+        print("Keine Lösung gefunden.")
+    else:
+        player_controller = PlayerController(
+            player1=Player("UCS Red", "red"),
+            player2=Player("UCS Green", "green")
+        )
+
+        game = Game(
+            graph_controller=graph_controller,
+            player_controller=player_controller,
+            view=GameView()
+        )
+
+        if __name__ == "__main__":
+
+            graph_controller = GraphController(grid_size=5)
+
+            problem = Problem(graph_controller.graph)
+
+            initial_state = State(
+                selected_edges=frozenset(),
+                box_owner=("", "", "", ""),
+                current_color="red"
+            )
+
+            path = uniform_cost_search.search(problem, initial_state) ####################################
+
+            if path is None:
+                print("Keine Lösung gefunden.")
+            else:
+                player_controller = PlayerController(
+                    player1=Player("UCS Red", "red"),
+                    player2=Player("UCS Green", "green")
+                )
+
+                game = Game(
+                    graph_controller=graph_controller,
+                    player_controller=player_controller,
+                    view=GameView()
+                )
+
+                game.replay_path(path)
