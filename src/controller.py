@@ -364,7 +364,7 @@ if __name__ == "__main__":
         print("Keine Lösung gefunden.")
     else:
         player_controller = PlayerController(
-            player1=Player("UCS Red", "red"),
+            player1=MinMax("UCS Red", "red"),
             player2=Player("UCS Green", "green")
         )
 

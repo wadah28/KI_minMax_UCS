@@ -72,13 +72,11 @@ from controller import GraphController
 
 
 if __name__ == "__main__":
-    # Echter Spielgraph
     graph_controller = GraphController(grid_size=5)
     graph = graph_controller.graph
 
     problem = Problem(graph)
 
-    # Zwei Minimax-Spieler
     red_minmax = MinMax(graph, max_color="red")
     green_minmax = MinMax(graph, max_color="green")
 
@@ -86,7 +84,7 @@ if __name__ == "__main__":
     state = State(
         selected_edges=frozenset(),
         box_owner=("", "", "", ""),
-        current_color="red"
+        current_color="green"
     )
 
     path = []
@@ -95,7 +93,7 @@ if __name__ == "__main__":
     print(state)
 
     # =========================
-    # 1. Zufälliger Zug für RED
+    # Zufälliger Zug für RED
     # =========================
     red_random_action = random.choice(problem.actions(state))
     path.append((red_random_action, state.current_color))
@@ -107,7 +105,7 @@ if __name__ == "__main__":
     state = problem.result(state, red_random_action)
 
     # ===========================
-    # 2. Zufälliger Zug für GREEN
+    # Zufälliger Zug für GREEN
     # ===========================
     green_random_action = random.choice(problem.actions(state))
     path.append((green_random_action, state.current_color))
