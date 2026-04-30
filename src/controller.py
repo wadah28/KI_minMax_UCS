@@ -374,32 +374,5 @@ if __name__ == "__main__":
             view=GameView()
         )
 
-        if __name__ == "__main__":
-
-            graph_controller = GraphController(grid_size=5)
-
-            problem = Problem(graph_controller.graph)
-
-            initial_state = State(
-                selected_edges=frozenset(),
-                box_owner=("", "", "", ""),
-                current_color="red"
-            )
-
-            path = uniform_cost_search.search(problem, initial_state) ####################################
-
-            if path is None:
-                print("Keine Lösung gefunden.")
-            else:
-                player_controller = PlayerController(
-                    player1=Player("UCS Red", "red"),
-                    player2=Player("UCS Green", "green")
-                )
-
-                game = Game(
-                    graph_controller=graph_controller,
-                    player_controller=player_controller,
-                    view=GameView()
-                )
-
-                game.replay_path(path)
+        game.replay_path(path)
+        print(path)
